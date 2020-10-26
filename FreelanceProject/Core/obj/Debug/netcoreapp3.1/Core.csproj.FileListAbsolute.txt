@@ -1,0 +1,9 @@
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\bin\Debug\netcoreapp3.1\Core.dll
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\bin\Debug\netcoreapp3.1\Core.pdb
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.dll
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.pdb
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.csprojAssemblyReference.cache
+C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
