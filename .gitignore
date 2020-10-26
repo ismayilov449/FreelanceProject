@@ -1,0 +1,11 @@
+/FreelanceProject/.vs/FreelanceProject/v16
+/FreelanceProject/FreelanceProject.Api/bin/Debug/netcoreapp3.1
+/FreelanceProject/FreelanceProject.Api/obj
+/FreelanceProject/FreelanceProject.Core/bin/Debug/netcoreapp3.1
+/FreelanceProject/FreelanceProject.Core/obj
+/FreelanceProject/FreelanceProject.Repository/bin/Debug/netcoreapp3.1
+/FreelanceProject/FreelanceProject.Repository/obj
+/FreelanceProject/FreelanceProject.Service/bin/Debug/netcoreapp3.1
+/FreelanceProject/FreelanceProject.Service/obj
+/FreelanceProject/FreelanceProject/Api.csproj.user
+.vs
