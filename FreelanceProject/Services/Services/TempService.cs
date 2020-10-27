@@ -13,7 +13,6 @@ namespace Services.Services
         Task<TempClass> GetById(int id);
         Task<IEnumerable<TempClass>> GetAll();
         Task<int> Add(TempClass entity);
-
     }
 
     public class TempService : ITempService
