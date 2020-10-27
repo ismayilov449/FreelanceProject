@@ -1,9 +1,0 @@
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\bin\Debug\netcoreapp3.1\Service.deps.json
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\bin\Debug\netcoreapp3.1\Service.dll
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.AssemblyInfoInputs.cache
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.AssemblyInfo.cs
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.csprojAssemblyReference.cache
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\bin\Debug\netcoreapp3.1\Service.pdb
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.dll
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.pdb
-C:\Users\Rufat\Desktop\FreelanceProject\FreelanceProject\Service\obj\Debug\netcoreapp3.1\Service.csproj.CoreCompileInputs.cache
