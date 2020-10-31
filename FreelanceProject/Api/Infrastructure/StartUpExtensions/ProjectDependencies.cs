@@ -16,7 +16,7 @@ namespace Api.Infrastructure.StartUpExtensions
     {
         public static IServiceCollection AddProjectDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            var repositoryAssembly = Assembly.GetAssembly(typeof(TempRepository));
+            var repositoryAssembly = Assembly.GetAssembly(typeof(CityRepository));
 
             services.RegisterAssemblyPublicNonGenericClasses(repositoryAssembly)
                 .Where(c => c.Name.EndsWith("Repository"))
@@ -30,7 +30,7 @@ namespace Api.Infrastructure.StartUpExtensions
                 .Where(c => c.Name.EndsWith("Query"))
                 .AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
 
-            var serviceAssembly = Assembly.GetAssembly(typeof(TempService));
+            var serviceAssembly = Assembly.GetAssembly(typeof(CityService));
 
             services.RegisterAssemblyPublicNonGenericClasses(serviceAssembly)
                 .Where(c => c.Name.EndsWith("Service"))
