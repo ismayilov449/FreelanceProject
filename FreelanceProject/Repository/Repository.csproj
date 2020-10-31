@@ -23,5 +23,7 @@
   <ItemGroup>
     <Folder Include="Cqrs\Commands\CityCommand\" />
     <Folder Include="Cqrs\Queries\CityQuery\" />
+    <Folder Include="Cqrs\Commands\EducationCommand\" />
+    <Folder Include="Cqrs\Queries\EducationQuery\" />
   </ItemGroup>
 </Project>
