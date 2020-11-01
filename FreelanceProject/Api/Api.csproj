@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'FreeLanceProject' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'FreelanceProject' ">
     <StartAction>Project</StartAction>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
   </PropertyGroup>

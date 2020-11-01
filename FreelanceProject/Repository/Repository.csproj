@@ -25,5 +25,6 @@
     <Folder Include="Cqrs\Queries\CityQuery\" />
     <Folder Include="Cqrs\Commands\EducationCommand\" />
     <Folder Include="Cqrs\Queries\EducationQuery\" />
+    <Folder Include="Cqrs\Queries\JobQuery\" />
   </ItemGroup>
 </Project>
