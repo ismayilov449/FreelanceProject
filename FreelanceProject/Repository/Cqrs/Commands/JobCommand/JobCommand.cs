@@ -84,6 +84,8 @@ EndDate = @{nameof(Job.EndDate)},
 Deadline = @{nameof(Job.Deadline)},
 PremiumStatus = @{nameof(Job.PremiumStatus)},
 ApproveStatus = @{nameof(Job.ApproveStatus)}
+
+Where Id = @{nameof(Job.Id)}
 ";
 
         public async Task<Guid> Add(Job job)
