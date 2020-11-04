@@ -49,7 +49,7 @@ ELSE CAST(0 AS BIT) END";
         {
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<User>(getUsersByRoleNameSql, roleName, _unitOfWork.GetTransaction());
+                var result = await _unitOfWork.GetConnection().QueryAsync<User>(getUsersByRoleNameSql, new { roleName }, _unitOfWork.GetTransaction());
                 return result;
             }
             catch (Exception)
@@ -62,7 +62,7 @@ ELSE CAST(0 AS BIT) END";
         {
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<Role>(getRolesByUserIdSql, userId, _unitOfWork.GetTransaction());
+                var result = await _unitOfWork.GetConnection().QueryAsync<Role>(getRolesByUserIdSql, new { userId }, _unitOfWork.GetTransaction());
                 return result;
             }
             catch (Exception)
