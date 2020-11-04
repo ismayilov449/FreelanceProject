@@ -2,6 +2,7 @@
 using Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,14 +17,22 @@ namespace Api.Infrastructure.Helpers
     {
 
 
-        public static string GenerateToken(LoginRequestModel loginRequestModel, Guid userId, IConfiguration _configuration)
+        public static string GenerateToken(IAuthService _authService, Guid userId, IConfiguration _configuration)
         {
             var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value);
             var now = DateTime.UtcNow;
 
+            var roles =  _authService.GetRolesByUserId(userId.ToString()).Result.ToList();
+
+
             var claims = new List<Claim> {
                 new Claim("UserId", userId.ToString()),
             };
+
+            if (roles != null && roles.Count > 0)
+            {
+                claims.AddRange(roles.Select(x => new Claim(ClaimTypes.Role, x.Name)));
+            }
 
             var tokenDescriptor = new JwtSecurityToken(
                 claims: claims.ToArray(),

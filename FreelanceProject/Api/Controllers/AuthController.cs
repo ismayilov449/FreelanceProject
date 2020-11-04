@@ -37,7 +37,7 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var tokenString = TokenManager.GenerateToken(userForLoginDto, user.Id, _configuration);
+            var tokenString = TokenManager.GenerateToken(_authService, user.Id, _configuration);
             tmpToken = tokenString;
             return Ok(new { tokenString, user });
         }
