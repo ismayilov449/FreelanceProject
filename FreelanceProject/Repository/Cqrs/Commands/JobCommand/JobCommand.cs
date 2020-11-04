@@ -96,10 +96,9 @@ Where Id = @{nameof(Job.Id)}
                 return result;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 
@@ -109,10 +108,9 @@ Where Id = @{nameof(Job.Id)}
             {
                 await _unitOfWork.GetConnection().QueryAsync(deleteSql, new { id }, _unitOfWork.GetTransaction());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 
@@ -122,9 +120,9 @@ Where Id = @{nameof(Job.Id)}
             {
                 await _unitOfWork.GetConnection().QueryAsync(updateSql, job, _unitOfWork.GetTransaction());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

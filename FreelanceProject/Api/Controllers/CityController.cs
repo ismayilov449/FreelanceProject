@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -11,6 +12,7 @@ using Services.Services;
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class CityController : ControllerBase
     {
@@ -44,7 +46,7 @@ namespace Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] City entity)
         {
-           await _cityService.Update(entity);
+            await _cityService.Update(entity);
             return Ok();
         }
         [HttpDelete]

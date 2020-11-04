@@ -44,10 +44,9 @@ namespace Repository.Cqrs.Commands.CategoryCommand
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 
@@ -57,10 +56,9 @@ namespace Repository.Cqrs.Commands.CategoryCommand
             {
                 await _unitOfWork.GetConnection().QueryAsync(deleteSql, new { id }, _unitOfWork.GetTransaction());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 
@@ -70,10 +68,9 @@ namespace Repository.Cqrs.Commands.CategoryCommand
             {
                 await _unitOfWork.GetConnection().QueryAsync(updateSql, category, _unitOfWork.GetTransaction());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
     }
