@@ -28,6 +28,19 @@ namespace Repository
 
         public async Task<Guid> Add(User user)
         {
+            user.UserName = user.Lastname + "_" + 0;
+
+            if (await _userQuery.GetByUsername(user.UserName) != null)
+            {
+                while (await _userQuery.GetByUsername(user.UserName) != null)
+                {
+                    var n = Convert.ToInt32(user.UserName.Substring(user.UserName.Length - 1)) + 1;
+                    user.UserName = user.Lastname + "_" + n;
+                }
+            }
+            user.DisplayName = user.Firstname + " " + user.Lastname;
+            user.NormalizedUserName = user.UserName.ToUpper();
+
             var result = await _userCommand.Add(user);
             return result;
         }

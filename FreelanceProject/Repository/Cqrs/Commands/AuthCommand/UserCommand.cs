@@ -73,11 +73,7 @@ Where Id  = @{nameof(User)}
         {
             try
             {
-                Random random = new Random();
-                user.DisplayName = user.Firstname + " " + user.Lastname;
-                user.UserName = user.Lastname + "_" + random.Next(100, 1000);
-                user.NormalizedUserName = user.UserName.ToUpper();
-
+               
                 var result = await _unitOfWork.GetConnection().QueryFirstOrDefaultAsync<Guid>(addSql, user, _unitOfWork.GetTransaction());
                 return result;
             }
