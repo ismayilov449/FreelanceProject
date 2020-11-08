@@ -24,7 +24,7 @@ namespace Repository.Cqrs.Commands.AuthCommand
             _unitOfWork = unitOfWork;
         }
 
-        private string addSql = $@"Insert Into UserRoles(UserId,RoleId,DeleteStatus) Output Inserted.Id
+        private string addSql = $@"Insert Into UserRoles(UserId,RoleId,DeleteStatus)
                                    Values(@{nameof(UserRole.UserId)},@{nameof(UserRole.RoleId)},0)";
 
         private string deleteSql = $@"Update UserRoles Set DeleteStatus = 1 Where Id = @id";
@@ -55,7 +55,7 @@ namespace Repository.Cqrs.Commands.AuthCommand
                 throw ex;
             }
         }
-
+        //it doesnt work
         public async Task Update(UserRole userRole)
         {
             try
