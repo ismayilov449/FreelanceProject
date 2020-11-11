@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,8 +75,15 @@ namespace Services.Services
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            var roles = await _roleRepository.GetAll();
+            var role = roles.Where(i => i.Name == "REGISTERED_USER").FirstOrDefault();
             var id = await _userRepository.Add(user);
             var endUser = await _userRepository.GetById(id.ToString());
+            await _userRoleRepository.Add(new UserRole()
+            {
+                UserId = id,
+                RoleId = role.Id
+            });
             return endUser;
         }
 
