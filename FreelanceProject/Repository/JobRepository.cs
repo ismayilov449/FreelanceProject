@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Models.SearchModels;
 using Repository.Cqrs.Commands.JobCommand;
 using Repository.Cqrs.Queries.JobQuery;
 
@@ -35,9 +36,9 @@ namespace Repository
         {
             await _jobCommand.Update(entity);
         }
-        public async Task<IEnumerable<Job>> GetAll()
+        public async Task<IEnumerable<Job>> GetAll(int offset, int limit)
         {
-            var result = await _jobQuery.GetAll();
+            var result = await _jobQuery.GetAll(offset, limit);
             return result;
         }
 
@@ -46,5 +47,12 @@ namespace Repository
             var result = await _jobQuery.GetById(id);
             return result;
         }
+
+        public async Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel)
+        {
+            var result = await _jobQuery.GetFullSearch(jobSearchModel);
+            return result;
+        }
+
     }
 }
