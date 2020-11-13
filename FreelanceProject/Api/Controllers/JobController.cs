@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Models.SearchModels;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -22,9 +23,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
         {
-            var result = await _jobService.GetAll();
+            var result = await _jobService.GetAll(offset, limit);
             return Ok(result);
         }
 
@@ -52,6 +53,12 @@ namespace Api.Controllers
         {
             await _jobService.Delete(id);
             return Ok();
+        }
+        [HttpPost("GetFullSearch")]
+        public async Task<IActionResult> GetFullSearch([FromBody] JobSearchModel jobSearchModel)
+        {
+            var result = await _jobService.GetFullSearch(jobSearchModel);
+            return Ok(result);
         }
     }
 }

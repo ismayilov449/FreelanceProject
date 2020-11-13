@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Models.SearchModels;
 using Repository;
 
 namespace Services.Services
@@ -9,7 +10,8 @@ namespace Services.Services
     public interface IJobService
     {
         Task<Job> GetById(string id);
-        Task<IEnumerable<Job>> GetAll();
+        Task<IEnumerable<Job>> GetAll(int offset, int limit);
+        Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel);
         Task<Guid> Add(Job entity);
         Task Delete(string id);
         Task Update(Job entity);
@@ -36,15 +38,21 @@ namespace Services.Services
             await _jobRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<Job>> GetAll()
+        public async Task<IEnumerable<Job>> GetAll(int offset, int limit)
         {
-            var result = await _jobRepository.GetAll();
+            var result = await _jobRepository.GetAll(offset, limit);
             return result;
         }
 
         public async Task<Job> GetById(string id)
         {
             var result = await _jobRepository.GetById(id);
+            return result;
+        }
+
+        public async Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel)
+        {
+            var result = await _jobRepository.GetFullSearch(jobSearchModel);
             return result;
         }
 
