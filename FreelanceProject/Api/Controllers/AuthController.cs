@@ -18,7 +18,6 @@ namespace Api.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
-        private string tmpToken;
 
         public AuthController(IAuthService authService, IConfiguration configuration)
         {
@@ -38,7 +37,6 @@ namespace Api.Controllers
             }
 
             var tokenString = TokenManager.GenerateToken(_authService, user.Id, _configuration);
-            tmpToken = tokenString;
             return Ok(new { tokenString, user });
         }
 
