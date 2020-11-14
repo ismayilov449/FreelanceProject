@@ -35,9 +35,9 @@ namespace Repository
         {
             await _ctyCommand.Update(entity);
         }
-        public async Task<IEnumerable<City>> GetAll()
+        public async Task<ListResult<City>> GetAll(int offset,int limit)
         {
-            var result = await _ctyQuery.GetAll();
+            var result = await _ctyQuery.GetAll(offset,limit);
             return result;
         }
 

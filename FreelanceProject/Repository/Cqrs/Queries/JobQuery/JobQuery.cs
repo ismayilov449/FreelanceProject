@@ -10,7 +10,7 @@ namespace Repository.Cqrs.Queries.JobQuery
 {
     public interface IJobQuery
     {
-        Task<IEnumerable<Job>> GetAll(int offset, int limit);
+        Task<ListResult<Job>> GetAll(int offset, int limit);
         Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel);
         Task<Job> GetById(string id);
     }
@@ -38,7 +38,7 @@ left join Education EDU on J.EducationId = EDU.Id
 ";
 
         private string condition = @$"Where J.DeleteStatus = 0 ";
-        public async Task<IEnumerable<Job>> GetAll(int offset, int limit)
+        public async Task<ListResult<Job>> GetAll(int offset, int limit)
         {
             var param = new
             {
@@ -47,7 +47,12 @@ left join Education EDU on J.EducationId = EDU.Id
             };
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<Job>(getAllSql, param, _unitOfWork.GetTransaction());
+                var data = await _unitOfWork.GetConnection().QueryMultipleAsync(getAllSql, param, _unitOfWork.GetTransaction());
+                var result = new ListResult<Job>
+                {
+                    List = data.Read<Job>(),
+                    TotalCount = data.ReadFirst<int>()
+                };
                 return result;
             }
             catch (Exception ex)

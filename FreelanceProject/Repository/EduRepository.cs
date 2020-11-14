@@ -35,9 +35,9 @@ namespace Repository
         {
             await _eduCommand.Update(entity);
         }
-        public async Task<IEnumerable<Education>> GetAll()
+        public async Task<ListResult<Education>> GetAll(int offset,int limit)
         {
-            var result = await _eduQuery.GetAll();
+            var result = await _eduQuery.GetAll(offset,limit);
             return result;
         }
 

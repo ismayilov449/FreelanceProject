@@ -9,7 +9,7 @@ namespace Repository.Cqrs.Queries.CityQuery
 {
     public interface ICtyQuery
     {
-        Task<IEnumerable<City>> GetAll();
+        Task<ListResult<City>> GetAll(int offset,int limit);
         Task<City> GetById(string id);
     }
     public class CtyQuery : ICtyQuery
@@ -20,14 +20,26 @@ namespace Repository.Cqrs.Queries.CityQuery
         {
             _unitOfWork = unitOfWork;
         }
-        private string getAllSql = @"Select * from Cities where DeleteStatus=0";
+        private string getAllSql = @"Select * from Cities where DeleteStatus=0
+ORDER BY Name DESC OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+SELECT COUNT(Id) TOTALCOUNT From Cities Where DeleteStatus=0";
         private string getByIdSql = @"Select * from Cities
                                       Where Id = @id";
-        public async Task<IEnumerable<City>> GetAll()
+        public async Task<ListResult<City>> GetAll(int offset,int limit)
         {
+            var param = new
+            {
+                Offset = offset,
+                Limit = limit
+            };
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<City>(getAllSql, null, _unitOfWork.GetTransaction());
+                var data = await _unitOfWork.GetConnection().QueryMultipleAsync(getAllSql, param, _unitOfWork.GetTransaction());
+                var result = new ListResult<City>
+                {
+                    List = data.Read<City>(),
+                    TotalCount = data.ReadFirst<int>()
+                };
                 return result;
             }
             catch (Exception ex)

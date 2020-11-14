@@ -9,7 +9,7 @@ namespace Services.Services
     public interface IEduService
     {
         Task<Education> GetById(string id);
-        Task<IEnumerable<Education>> GetAll();
+        Task<ListResult<Education>> GetAll(int offset,int limit);
         Task<Guid> Add(Education entity);
         Task Delete(string id);
         Task Update(Education entity);
@@ -36,9 +36,9 @@ namespace Services.Services
             await _eduRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<Education>> GetAll()
+        public async Task<ListResult<Education>> GetAll(int offset,int limit)
         {
-            var result = await _eduRepository.GetAll();
+            var result = await _eduRepository.GetAll(offset,limit);
             return result;
         }
 

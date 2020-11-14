@@ -12,7 +12,6 @@ using Services.Services;
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class CityController : ControllerBase
     {
@@ -24,9 +23,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
         {
-            var result = await _cityService.GetAll();
+            var result = await _cityService.GetAll(offset,limit);
             return Ok(result);
         }
 

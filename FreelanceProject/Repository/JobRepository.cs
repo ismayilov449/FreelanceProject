@@ -36,7 +36,7 @@ namespace Repository
         {
             await _jobCommand.Update(entity);
         }
-        public async Task<IEnumerable<Job>> GetAll(int offset, int limit)
+        public async Task<ListResult<Job>> GetAll(int offset, int limit)
         {
             var result = await _jobQuery.GetAll(offset, limit);
             return result;
