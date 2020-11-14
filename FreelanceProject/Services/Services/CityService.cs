@@ -9,7 +9,7 @@ namespace Services.Services
     public interface ICityService
     {
         Task<City> GetById(string id);
-        Task<IEnumerable<City>> GetAll();
+        Task<ListResult<City>> GetAll(int offset,int limit);
         Task<Guid> Add(City entity);
         Task Delete(string id);
         Task Update(City entity);
@@ -36,9 +36,9 @@ namespace Services.Services
             await _cityRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<City>> GetAll()
+        public async Task<ListResult<City>> GetAll(int offset,int limit)
         {
-            var result = await _cityRepository.GetAll();
+            var result = await _cityRepository.GetAll(offset,limit);
             return result;
         }
 

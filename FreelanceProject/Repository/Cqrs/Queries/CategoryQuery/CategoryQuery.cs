@@ -10,7 +10,7 @@ namespace Repository.Cqrs.Queries.CategoryQuery
 {
     public interface ICategoryQuery
     {
-        Task<IEnumerable<Category>> GetAll();
+        Task<ListResult<Category>> GetAll(int offset , int limit);
         Task<Category> GetById(string id);
     }
 
@@ -22,16 +22,27 @@ namespace Repository.Cqrs.Queries.CategoryQuery
         {
             _unitOfWork = unitOfWork;
         }
-        private string getAllSql = @"Select * from Categories where DeleteStatus=0";
+        private string getAllSql = @"Select * from Categories where DeleteStatus=0
+ORDER BY Name DESC OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+SELECT COUNT(Id) TOTALCOUNT From Categories Where DeleteStatus=0";
         private string getByIdSql = @"Select * from Categories
                                       Where Id = @id";
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<ListResult<Category>> GetAll(int offset, int limit)
         {
+            var param = new
+            {
+                Offset = offset,
+                Limit = limit
+            };
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<Category>(getAllSql, null, _unitOfWork.GetTransaction());
-
+                var data = await _unitOfWork.GetConnection().QueryMultipleAsync(getAllSql, param, _unitOfWork.GetTransaction());
+                var result = new ListResult<Category>
+                {
+                    List = data.Read<Category>(),
+                    TotalCount = data.ReadFirst<int>()
+                };
                 return result;
             }
             catch (Exception)

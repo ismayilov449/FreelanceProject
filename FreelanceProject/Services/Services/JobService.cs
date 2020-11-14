@@ -10,7 +10,7 @@ namespace Services.Services
     public interface IJobService
     {
         Task<Job> GetById(string id);
-        Task<IEnumerable<Job>> GetAll(int offset, int limit);
+        Task<ListResult<Job>> GetAll(int offset, int limit);
         Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel);
         Task<Guid> Add(Job entity);
         Task Delete(string id);
@@ -38,7 +38,7 @@ namespace Services.Services
             await _jobRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<Job>> GetAll(int offset, int limit)
+        public async Task<ListResult<Job>> GetAll(int offset, int limit)
         {
             var result = await _jobRepository.GetAll(offset, limit);
             return result;

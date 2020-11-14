@@ -9,7 +9,7 @@ namespace Repository.Cqrs.Queries.EducationQuery
 {
     public interface IEduQuery
     {
-        Task<IEnumerable<Education>> GetAll();
+        Task<ListResult<Education>> GetAll(int offset,int limit);
         Task<Education> GetById(string id);
     }
     public class EduQuery : IEduQuery
@@ -20,14 +20,26 @@ namespace Repository.Cqrs.Queries.EducationQuery
         {
             _unitOfWork = unitOfWork;
         }
-        private string getAllSql = @"Select * from Education where DeleteStatus=0";
+        private string getAllSql = @"Select * from Education where DeleteStatus=0
+ORDER BY Name DESC OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
+SELECT COUNT(Id) TOTALCOUNT From Education Where DeleteStatus=0" ;
         private string getByIdSql = @"Select * from Education
                                       Where Id = @id";
-        public async Task<IEnumerable<Education>> GetAll()
+        public async Task<ListResult<Education>> GetAll(int offset,int limit)
         {
+            var param = new
+            {
+                Offset = offset,
+                Limit = limit
+            };
             try
             {
-                var result = await _unitOfWork.GetConnection().QueryAsync<Education>(getAllSql, null, _unitOfWork.GetTransaction());
+                var data = await _unitOfWork.GetConnection().QueryMultipleAsync(getAllSql, param, _unitOfWork.GetTransaction());
+                var result = new ListResult<Education>
+                {
+                    List = data.Read<Education>(),
+                    TotalCount = data.ReadFirst<int>()
+                };
                 return result;
             }
             catch (Exception ex)

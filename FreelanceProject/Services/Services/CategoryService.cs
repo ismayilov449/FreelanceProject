@@ -10,7 +10,7 @@ namespace Services.Services
     public interface ICategoryService
     {
         Task<Category> GetById(string id);
-        Task<IEnumerable<Category>> GetAll();
+        Task<ListResult<Category>> GetAll(int offset,int limit);
         Task<Guid> Add(Category category);
         Task Delete(string id);
         Task Update(Category category);
@@ -35,9 +35,9 @@ namespace Services.Services
             await _categoryRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<ListResult<Category>> GetAll(int offset,int limit)
         {
-            var result = await _categoryRepository.GetAll();
+            var result = await _categoryRepository.GetAll(offset,limit);
             return result;
         }
 

@@ -35,9 +35,9 @@ namespace Repository
             await _categoryCommand.Delete(id);
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<ListResult<Category>> GetAll(int offset, int limit)
         {
-            var result = await _categoryQuery.GetAll();
+            var result = await _categoryQuery.GetAll(offset,limit);
             return result;
         }
 

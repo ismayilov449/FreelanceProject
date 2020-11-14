@@ -21,9 +21,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
         {
-            var result = await _categoryService.GetAll();
+            var result = await _categoryService.GetAll(offset, limit);
             return Ok(result);
         }
 

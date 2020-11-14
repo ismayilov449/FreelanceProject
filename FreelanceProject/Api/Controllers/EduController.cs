@@ -22,9 +22,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
         {
-            var result = await _eduService.GetAll();
+            var result = await _eduService.GetAll(offset,limit);
             return Ok(result);
         }
 
