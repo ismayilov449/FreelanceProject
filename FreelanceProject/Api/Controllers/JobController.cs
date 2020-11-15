@@ -36,6 +36,13 @@ namespace Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetByCategory")]
+        public async Task<IActionResult> GetByCategory([FromQuery] string categoryId, int offset, int limit)
+        {
+            var result = await _jobService.GetByCategory(categoryId, offset, limit);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Job entity)
         {
