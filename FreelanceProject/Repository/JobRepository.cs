@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Models.ResponseModels;
 using Core.Models.SearchModels;
 using Repository.Cqrs.Commands.JobCommand;
 using Repository.Cqrs.Queries.JobQuery;
@@ -36,23 +37,28 @@ namespace Repository
         {
             await _jobCommand.Update(entity);
         }
-        public async Task<ListResult<Job>> GetAll(int offset, int limit)
+        public async Task<ListResult<JobResponseModel>> GetAll(int offset, int limit)
         {
             var result = await _jobQuery.GetAll(offset, limit);
             return result;
         }
 
-        public async Task<Job> GetById(string id)
+        public async Task<JobResponseModel> GetById(string id)
         {
             var result = await _jobQuery.GetById(id);
             return result;
         }
 
-        public async Task<ListResult<Job>> GetFullSearch(JobSearchModel jobSearchModel)
+        public async Task<ListResult<JobResponseModel>> GetFullSearch(JobSearchModel jobSearchModel)
         {
             var result = await _jobQuery.GetFullSearch(jobSearchModel);
             return result;
         }
 
+        public async Task<ListResult<JobResponseModel>> GetByCategory(string categoryId, int offset, int limit)
+        {
+            var result = await _jobQuery.GetByCategory(categoryId, offset, limit);
+            return result;
+        }
     }
 }
