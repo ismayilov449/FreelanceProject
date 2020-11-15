@@ -34,60 +34,15 @@ Values(@CityId,
 
         public async Task SubscribeFilter(Filter filter, string userId)
         {
-            int catCounter = 0;
-            int citCounter = 0;
-            int eduCounter = 0;
-            int allCounter = 1;
-            var param = new FilterRequestModel();
             try
             {
-                for (int i = 0; i < allCounter; i++)
+                foreach (var item in filter.Filters)
                 {
+                    item.UserId = userId;
+                    await _unitOfWork.GetConnection().QueryAsync(addSubscriptionSql, item, _unitOfWork.GetTransaction());
 
-                    if (filter.Categories != null)
-                    {
-                        if ((filter.Categories as List<Guid>).Count > 1)
-                        {
-                            param.CategoryId = (filter.Categories as List<Guid>)[catCounter].ToString();
-                            allCounter++;
-                            catCounter++;
-                        }
-                        else
-                        {
-                            param.CategoryId = (filter.Categories as List<Guid>)[0].ToString();
-                        }
-                    }
-                    if (filter.Cities != null)
-                    {
-                        if ((filter.Cities as List<Guid>).Count > 1)
-                        {
-                            param.CityId = (filter.Cities as List<Guid>)[citCounter].ToString();
-                            allCounter++;
-                            citCounter++;
-                        }
-                        else
-                        {
-                            param.CityId = (filter.Cities as List<Guid>)[0].ToString();
-                        }
-                    }
-                    if (filter.Education != null)
-                    {
-                        if ((filter.Education as List<Guid>).Count > 1)
-                        {
-                            param.EducationId = (filter.Education as List<Guid>)[eduCounter].ToString();
-                            allCounter++;
-                            eduCounter++;
-                        }
-                        else
-                        {
-                            param.EducationId = (filter.Education as List<Guid>)[0].ToString();
-                        }
-                    }
-                    param.UserId = userId;
-                    param.Salary = filter.Salary;
-
-                    await _unitOfWork.GetConnection().QueryAsync(addSubscriptionSql, param, _unitOfWork.GetTransaction());
                 }
+
 
             }
             catch (Exception ex)
