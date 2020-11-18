@@ -92,6 +92,9 @@ Where Id = @{nameof(Job.Id)}
         {
             try
             {
+                job.EndDate = DateTime.Now.AddDays(30);
+                job.PublishedDate = DateTime.Now;
+                job.Deadline = DateTime.Now.AddDays(30);
                 var result = await _unitOfWork.GetConnection().QueryFirstOrDefaultAsync<Guid>(addSql, job, _unitOfWork.GetTransaction());
                 return result;
 
