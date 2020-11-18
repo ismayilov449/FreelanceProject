@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.Infrastructure.Helpers;
 using Api.Infrastructure.RequestModels;
+using Core.Models.ServiceModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -96,10 +97,10 @@ namespace Api.Controllers
             return Ok(user);
         }
 
-        [HttpGet("GetCurrentUser")]
-        public async Task<IActionResult> GetCurrentUser(string token)
+        [HttpPost("GetCurrentUser")]
+        public async Task<IActionResult> GetCurrentUser([FromBody] TokenModel token)
         {
-            var data = TokenManager.GetPrincipal(token, _configuration);
+            var data = TokenManager.GetPrincipal(token.Token, _configuration);
 
             var result = await _authService.GetUserById(data.Claims.FirstOrDefault(i => i.Type == "UserId").Value);
 
