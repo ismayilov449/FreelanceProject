@@ -49,7 +49,7 @@ where J.DeleteStatus=0 and CAT.Id = @id
 ORDER BY SalaryMin DESC OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY
 SELECT COUNT(Id) TOTALCOUNT From Jobs Where DeleteStatus = 0";
 
-        private string getFullSearch = @"select J.*,U.UserName,CIT.Name,CAT.Name,EDU.Name
+        private string getFullSearch = @"select J.*,U.DisplayName Username,CIT.Name City,CAT.Name Category,EDU.Name Education
 from Jobs J
 left join Users U ON J.RecruiterId = U.Id
 left join Cities CIT on J.CityId = CIT.Id
@@ -139,7 +139,7 @@ left join Education EDU on J.EducationId = EDU.Id
             }
             if (jobSearchModel.Salary != 0)
             {
-                condition += $@"AND J.SalaryMin < @Salary AND J.SalaryMax > @Salary ";
+                condition += $@"AND J.SalaryMin = @Salary OR J.SalaryMax = @Salary ";
             }
 
             getFullSearch += condition;
