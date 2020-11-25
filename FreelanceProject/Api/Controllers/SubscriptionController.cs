@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Infrastructure.Helpers;
+using Api.Infrastructure.RequestModels;
 using Core.Models.ServiceModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,12 +28,12 @@ namespace Api.Controllers
         }
 
         [HttpPost("SubscribeJob")]
-        public async Task<IActionResult> Subscribe(Filter filter, string token)
+        public async Task<IActionResult> Subscribe([FromBody]SubscribeRequestModel model)
         {
-            var data = TokenManager.GetPrincipal(token, _configuration);
+            var data = TokenManager.GetPrincipal(model.token, _configuration);
             var currentUser = await _authService.GetUserById(data.Claims.FirstOrDefault(i => i.Type == "UserId").Value);
 
-            await _filterService.SubscribeFilter(filter, currentUser.Id.ToString());
+            await _filterService.SubscribeFilter(model.filter, currentUser.Id.ToString());
             return Ok();
         }
     }
