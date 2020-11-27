@@ -11,7 +11,8 @@ namespace Repository.Cqrs.Commands.FilterCommand
 {
     public interface IFilterCommand
     {
-        Task SubscribeFilter(Filter filter, string userId);
+        Task<Guid> SubscribeFilter(Filter filter, string userId);
+        Task Delete(string id);
     }
 
     public class FilterCommand : IFilterCommand
@@ -23,7 +24,8 @@ namespace Repository.Cqrs.Commands.FilterCommand
             _unitOfWork = unitOfWork;
         }
 
-        private string addSubscriptionSql = $@"Insert Into Subscriptions(CityId,CategoryId,EducationId,Salary,UserId,SubscribeStatus,DeleteStatus) 
+        private string addSubscriptionSql = $@"Insert Into Subscriptions(CityId,CategoryId,EducationId,Salary,UserId,SubscribeStatus,DeleteStatus)
+Output Inserted.Id
 Values(@CityId,
 @CategoryId,
 @EducationId,
@@ -32,16 +34,32 @@ Values(@CityId,
 1,
 0)";
 
-        public async Task SubscribeFilter(Filter filter, string userId)
+        private string deleteSql = $@"Update Subscriptions Set DeleteStatus = 1 Where Id = @id";
+
+        public async Task Delete(string id)
         {
             try
             {
-                foreach (var item in filter.Filters)
-                {
-                    item.UserId = userId;
-                    await _unitOfWork.GetConnection().QueryAsync(addSubscriptionSql, item, _unitOfWork.GetTransaction());
+                await _unitOfWork.GetConnection().QueryAsync(deleteSql, new { id }, _unitOfWork.GetTransaction());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Guid> SubscribeFilter(Filter filter, string userId)
+        {
+            try
+            {
 
-                }
+                //  foreach (var item in filter.Filters)
+                // {
+                var filt = filter.Filters.AsList().ToArray()[0];
+                filt.UserId = userId;
+                var result = await _unitOfWork.GetConnection().QueryFirstOrDefaultAsync<Guid>(addSubscriptionSql, filt, _unitOfWork.GetTransaction());
+
+                // }
+                return result;
 
 
             }

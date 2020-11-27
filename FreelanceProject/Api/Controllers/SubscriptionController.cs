@@ -33,7 +33,13 @@ namespace Api.Controllers
             var data = TokenManager.GetPrincipal(model.token, _configuration);
             var currentUser = await _authService.GetUserById(data.Claims.FirstOrDefault(i => i.Type == "UserId").Value);
 
-            await _filterService.SubscribeFilter(model.filter, currentUser.Id.ToString());
+           var result= await _filterService.SubscribeFilter(model.filter, currentUser.Id.ToString());
+            return Ok(result);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery] string id)
+        {
+            await _filterService.Delete(id);
             return Ok();
         }
     }
