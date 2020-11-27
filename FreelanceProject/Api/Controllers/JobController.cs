@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Infrastructure.Helpers;
 using Core.Models;
 using Core.Models.SearchModels;
+using Core.Models.ServiceModels;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -16,10 +18,14 @@ namespace Api.Controllers
     public class JobController : ControllerBase
     {
         private readonly IJobService _jobService;
+        private readonly IFilterService _filterService;
+        private readonly IMailService _mailService;
 
-        public JobController(IJobService jobService)
+        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService)
         {
             _jobService = jobService;
+            _filterService = filterService;
+            _mailService = mailService;
         }
 
         [HttpGet("GetAll")]
@@ -46,7 +52,28 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Job entity)
         {
+            var filterRequestModel = new FilterRequestModel
+            {
+                CityId = entity.CityId.ToString(),
+                CategoryId = entity.CategoryId.ToString(),
+                EducationId = entity.EducationId.ToString(),
+                Salary = entity.SalaryMin
+            };
+
             var result = await _jobService.Add(entity);
+            if (result != Guid.Empty)
+            {
+                var users = await _filterService.GetUsers(filterRequestModel);
+                if (users.Count() > 0)
+                {
+                    foreach (var user in users)
+                    {
+                        await _mailService.SendMailAsync(user.Username, user.Email, "aue");
+                    }
+                }
+            }
+
+
             return Ok(result);
         }
         [HttpPut]
