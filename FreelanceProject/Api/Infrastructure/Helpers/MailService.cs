@@ -46,7 +46,7 @@ namespace Api.Infrastructure.Helpers
 
                 SmtpClient client = new SmtpClient();
                 client.Connect(smtp_server, port, true);
-                client.Authenticate(email, passwrod);
+                client.Authenticate(email, password);
 
 
                 await client.SendAsync(message);
