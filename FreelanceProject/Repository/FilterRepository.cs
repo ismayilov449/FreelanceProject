@@ -10,8 +10,10 @@ namespace Repository
 {
     public interface IFilterRepository
     {
-        Task SubscribeFilter(Filter filter, string userId);
+        Task<Guid> SubscribeFilter(Filter filter, string userId);
         Task<IEnumerable<TempUser>> GetUsers(FilterRequestModel filterRequestModel);
+
+        Task Delete(string id);
     }
 
     public class FilterRepository : IFilterRepository
@@ -31,11 +33,14 @@ namespace Repository
             return result;
         }
 
-        public async Task SubscribeFilter(Filter filter, string userId)
+        public async Task<Guid> SubscribeFilter(Filter filter, string userId)
         {
-            await _filterCommand.SubscribeFilter(filter, userId);
+            return await _filterCommand.SubscribeFilter(filter, userId);
         }
-
+        public async Task Delete(string id)
+        {
+            await _filterCommand.Delete(id);
+        }
 
     }
 
