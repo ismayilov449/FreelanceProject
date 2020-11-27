@@ -43,6 +43,7 @@ Deadline,
 DeleteStatus,
 PremiumStatus,
 ApproveStatus)
+Output Inserted.Id
 Values(@{nameof(Job.RecruiterId)},
 @{nameof(Job.CategoryId)},
 @{nameof(Job.CityId)},

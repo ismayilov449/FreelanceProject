@@ -9,7 +9,7 @@ namespace Core.Models.ServiceModels
         public string CategoryId { get; set; }
         public string CityId { get; set; }
         public string EducationId { get; set; }
-        public int Salary { get; set; }
+        public decimal Salary { get; set; }
         public string UserId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Api.Infrastructure.Helpers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
 using Repository;
@@ -37,6 +38,8 @@ namespace Api.Infrastructure.StartUpExtensions
                 .AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMailService, MailService>();
+
 
             return services;
         }
