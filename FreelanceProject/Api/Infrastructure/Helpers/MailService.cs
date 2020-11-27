@@ -27,7 +27,7 @@ namespace Api.Infrastructure.Helpers
             try
             {
                 string email = _configuration.GetSection("Email:projectEmail").Value;
-                string passwrod = _configuration.GetSection("Email:projectPassword").Value;
+                string password = _configuration.GetSection("Email:projectPassword").Value;
                 string smtp_server = _configuration.GetSection("Email:smtp_server").Value;
                 int port = Int32.Parse(_configuration.GetSection("Email:port").Value);
 
