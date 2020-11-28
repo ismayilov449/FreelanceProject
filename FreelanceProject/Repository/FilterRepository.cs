@@ -35,6 +35,22 @@ namespace Repository
 
         public async Task<Guid> SubscribeFilter(Filter filter, string userId)
         {
+            var tmpList = filter.Filters as List<FilterRequestModel>;
+            var tempFilterRequestModel = new FilterRequestModel
+            {
+                CategoryId = tmpList[0].CategoryId,
+                CityId = tmpList[0].CityId,
+                EducationId = tmpList[0].EducationId,
+                Salary = tmpList[0].Salary,
+                UserId = userId
+            };
+
+            var tmpResult = await _filterQuery.GetUsers(tempFilterRequestModel) as List<TempUser>;
+            if (tmpResult.Count > 0)
+            {
+                return tmpResult[0].Id;
+            }
+
             return await _filterCommand.SubscribeFilter(filter, userId);
         }
         public async Task Delete(string id)
