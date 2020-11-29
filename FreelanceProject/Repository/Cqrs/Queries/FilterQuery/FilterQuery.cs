@@ -22,7 +22,7 @@ namespace Repository.Cqrs.Queries.FilterQuery
             _unitOfWork = unitOfWork;
         }
 
-        private string getUsers = @"Select S.Id Id,U.UserName Username,U.Email Email from Subscriptions S
+        private string getUsers = @"Select S.Id Id,U.UserName Username,U.Email Email,U.PhoneNumber Number from Subscriptions S
 Left Join Users U on S.UserId = U.Id
 where S.DeleteStatus = 0 ";
 
@@ -64,5 +64,6 @@ where S.DeleteStatus = 0 ";
         public Guid Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public string Number { get; set; }
     }
 }

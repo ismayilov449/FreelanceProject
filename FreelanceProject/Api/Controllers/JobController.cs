@@ -20,12 +20,14 @@ namespace Api.Controllers
         private readonly IJobService _jobService;
         private readonly IFilterService _filterService;
         private readonly IMailService _mailService;
+        private readonly ISmsService _smsService;
 
-        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService)
+        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService, ISmsService smsService)
         {
             _jobService = jobService;
             _filterService = filterService;
             _mailService = mailService;
+            _smsService = smsService;
         }
 
         [HttpGet("GetAll")]
@@ -69,6 +71,7 @@ namespace Api.Controllers
                     foreach (var user in users)
                     {
                         await _mailService.SendMailAsync(user.Username, user.Email, "aue");
+                        //await _smsService.SendMailAsync(user.Number, "aue");
                     }
                 }
             }
