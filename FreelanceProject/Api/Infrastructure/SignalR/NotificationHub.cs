@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Core.Models;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Api.Infrastructure.SignalR
     public class NotificationHub : Hub
     {
 
-        public async Task SendNotification(string message)
+        public async Task SendNotification(Job job)
         {
-            await Clients.All.SendAsync("ReceiveNotification", message);
+            await Clients.All.SendAsync("ReceiveNotification", job);
         }
 
         public override async Task OnConnectedAsync()
