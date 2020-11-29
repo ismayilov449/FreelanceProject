@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Api.Infrastructure.SignalR;
 using Api.Infrastructure.StartUpExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -32,13 +33,16 @@ namespace Api
         {
             var key = Encoding.ASCII.GetBytes(Configuration["Auth:Jwt:Key"]);
 
+            services.AddSignalR();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
                 {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:3000")
+                        .AllowCredentials();
                 });
             });
 
@@ -60,7 +64,7 @@ namespace Api
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = false
-                  
+
                 };
             });
 
@@ -117,6 +121,11 @@ namespace Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/hubs/operation");
+            });
 
             app.UseEndpoints(endpoints =>
             {
