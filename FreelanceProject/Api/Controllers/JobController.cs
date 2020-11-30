@@ -22,13 +22,16 @@ namespace Api.Controllers
         private readonly IFilterService _filterService;
         private readonly IMailService _mailService;
         private readonly INotifyService _notifyService;
+        private readonly ISmsService _smsService;
 
-        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService, ISmsService smsService, INotifyService notifyService)        {
+        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService, ISmsService smsService, INotifyService notifyService)
+        {
             _jobService = jobService;
             _filterService = filterService;
             _mailService = mailService;
             _notifyService = notifyService;
-            }
+            _smsService = smsService;
+        }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
@@ -65,14 +68,14 @@ namespace Api.Controllers
             var result = await _jobService.Add(entity);
             if (result != Guid.Empty)
             {
-				        var currJob = await _jobService.GetById(result.ToString());
+                var currJob = await _jobService.GetById(result.ToString());
                 var users = await _filterService.GetUsers(filterRequestModel);
                 if (users.Count() > 0)
                 {
                     foreach (var user in users)
                     {
                         await _mailService.SendMailAsync(user.Username, user.Email, "aue");
-						            await _notifyService.SendNotification(currJob);
+                        await _notifyService.SendNotification(currJob);
                         //await _smsService.SendMailAsync(user.Number, "aue");
                     }
                 }
