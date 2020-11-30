@@ -28,7 +28,7 @@ namespace Api.Controllers
             _filterService = filterService;
             _mailService = mailService;
             _notifyService = notifyService;
-        }
+            }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] int offset, int limit)
@@ -65,22 +65,19 @@ namespace Api.Controllers
             var result = await _jobService.Add(entity);
             if (result != Guid.Empty)
             {
-				var currJob = await _jobService.GetById(result.ToString());
+				        var currJob = await _jobService.GetById(result.ToString());
                 var users = await _filterService.GetUsers(filterRequestModel);
                 if (users.Count() > 0)
                 {
                     foreach (var user in users)
                     {
                         await _mailService.SendMailAsync(user.Username, user.Email, "aue");
-						await _notifyService.SendNotification(currJob);
+						            await _notifyService.SendNotification(currJob);
+                        //await _smsService.SendMailAsync(user.Number, "aue");
                     }
                 }
             }
 
-            
-
-
-            
             return Ok(result);
         }
         [HttpPut]

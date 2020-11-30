@@ -41,6 +41,7 @@ namespace Api.Infrastructure.StartUpExtensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<INotifyService, NotifyService>();
+            services.AddScoped<ISmsService, SmsService>();
 
             return services;
         }
