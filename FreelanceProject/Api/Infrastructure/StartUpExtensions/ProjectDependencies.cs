@@ -1,4 +1,5 @@
 ﻿using Api.Infrastructure.Helpers;
+using Api.Infrastructure.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AutoRegisterDi;
@@ -39,7 +40,7 @@ namespace Api.Infrastructure.StartUpExtensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMailService, MailService>();
-
+            services.AddScoped<INotifyService, NotifyService>();
 
             return services;
         }
