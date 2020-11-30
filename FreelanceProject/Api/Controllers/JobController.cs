@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Infrastructure.Helpers;
+using Api.Infrastructure.SignalR;
 using Core.Models;
 using Core.Models.SearchModels;
 using Core.Models.ServiceModels;
@@ -20,13 +21,15 @@ namespace Api.Controllers
         private readonly IJobService _jobService;
         private readonly IFilterService _filterService;
         private readonly IMailService _mailService;
+        private readonly INotifyService _notifyService;
         private readonly ISmsService _smsService;
 
-        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService, ISmsService smsService)
+        public JobController(IJobService jobService, IFilterService filterService, IMailService mailService, ISmsService smsService, INotifyService notifyService)
         {
             _jobService = jobService;
             _filterService = filterService;
             _mailService = mailService;
+            _notifyService = notifyService;
             _smsService = smsService;
         }
 
@@ -65,17 +68,18 @@ namespace Api.Controllers
             var result = await _jobService.Add(entity);
             if (result != Guid.Empty)
             {
+                var currJob = await _jobService.GetById(result.ToString());
                 var users = await _filterService.GetUsers(filterRequestModel);
                 if (users.Count() > 0)
                 {
                     foreach (var user in users)
                     {
                         await _mailService.SendMailAsync(user.Username, user.Email, "aue");
+                        await _notifyService.SendNotification(currJob);
                         //await _smsService.SendMailAsync(user.Number, "aue");
                     }
                 }
             }
-
 
             return Ok(result);
         }

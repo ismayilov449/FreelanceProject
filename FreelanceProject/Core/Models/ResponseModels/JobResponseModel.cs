@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Core.Models.ResponseModels
 {
-    public class JobResponseModel
+    public class JobResponseModel : Job
     {
         public Guid Id { get; set; }
         public Guid RecruiterId { get; set; }
