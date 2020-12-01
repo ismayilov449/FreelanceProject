@@ -42,6 +42,7 @@ namespace Api.Infrastructure.StartUpExtensions
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<INotifyService, NotifyService>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddSingleton<IClientManager, ClientManager>();
 
             return services;
         }
