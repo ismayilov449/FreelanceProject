@@ -75,7 +75,7 @@ namespace Api.Controllers
                     foreach (var user in users)
                     {
                         //await _mailService.SendMailAsync(user.Username, user.Email, "aue");
-                        await _notifyService.RefreshNotification(currJob, entity.RecruiterId.ToString());
+                        await _notifyService.RefreshNotification(currJob, user.UserId.ToString());
                         //await _smsService.SendMailAsync(user.Number, "aue");
                     }
                 }

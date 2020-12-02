@@ -26,11 +26,11 @@ namespace Api.Infrastructure.SignalR
 
         public async Task RefreshNotification(Job job, string userId)
         {
-            var ids = _clientManager.GetClients().FindAll(x => x.UserId != userId).Select(x => x.ConnectionId).ToList();
+            var currUserId = _clientManager.GetAllClients().FirstOrDefault(x => x.UserId == userId);
 
-            if (ids != null)
+            if (currUserId != null)
             {
-                await _hubContext.Clients.Clients(ids).SendAsync("ReceiveNotification", job);
+                await _hubContext.Clients.Client(currUserId.ConnectionId).SendAsync("ReceiveNotification", job);
             }
         }
 
